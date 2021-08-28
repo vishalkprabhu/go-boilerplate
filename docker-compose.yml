@@ -1,0 +1,48 @@
+version: '3.6'
+
+services: 
+
+  mysql:
+    image: mysql
+    restart: always
+    ports: 
+      - 3306:3306
+    environment: 
+        MYSQL_ROOT_HOST: localhost
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: mydb
+        MYSQL_USER: user
+        MYSQL_PASSWORD: user
+    networks:
+      - echoApp      
+
+    volumes: 
+    - ./init:/docker-entrypoint-initdb.d
+    - app_db:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports: 
+      - 8080:8080
+    networks:
+      - echoApp   
+  web:
+    container_name: echo_app
+    image: echo_app:latest
+    build: ./
+    command: go run main.go
+    volumes:
+      - .:/echo_app
+    ports: 
+      - "1323:1323"      
+    depends_on:
+      - mysql
+    networks:
+      - echoApp  
+volumes: 
+  app_db:
+
+networks: 
+  echoApp:
+    driver: bridge
