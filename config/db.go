@@ -6,7 +6,7 @@ const (
 	DBUser     = "user"
 	DBPassword = "user"
 	DBName     = "mydb"
-	DBHost     = "localhost"
+	DBHost     = "mysql"
 	DBPort     = "3306"
 	DBtype     = "mysql"
 )
