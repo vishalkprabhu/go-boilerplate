@@ -1,5 +1,6 @@
 # GO Lang Boilerplate Dockerised 
-### ( ECHO framework+mysql+Adminer+GORM )
+###  [ Echo+MySql+GORM+Adminer ]
+## Build Status: [![Build Status](https://app.travis-ci.com/vishalkprabhu/go-boilerplate.svg?branch=main)](https://app.travis-ci.com/vishalkprabhu/go-boilerplate)
 
 Golang development made easy with docker container, just build and deploy.
 
