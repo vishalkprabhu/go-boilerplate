@@ -7,7 +7,7 @@ services:
     container_name: mysql
     restart: always
     ports: 
-      - 3306:3306
+      - 3308:3308
     environment: 
         MYSQL_ROOT_HOST: localhost
         MYSQL_ROOT_PASSWORD: root
@@ -15,11 +15,9 @@ services:
         MYSQL_USER: user
         MYSQL_PASSWORD: user
     networks:
-      - echoApp      
-
+      - webapp_net      
     volumes: 
-    - ./init:/docker-entrypoint-initdb.d
-    - app_db:/var/lib/mysql
+    - data:/var/lib/mysql
 
   adminer:
     image: adminer
@@ -27,23 +25,24 @@ services:
     ports: 
       - 8080:8080
     networks:
-      - echoApp   
+      - webapp_net   
   web:
-    container_name: echo_app
-    image: echo_app:latest
+    container_name: web_app
+    image: web_app:latest
     build: ./
-    command: go run main.go
     volumes:
-      - .:/echo_app
+      - ./bin/:/web_app/
     ports: 
-      - "1323:1323"      
-    depends_on:
-      - mysql
+      - "1200:1200"      
     networks:
-      - echoApp  
+      - webapp_net
+    environment:
+      - WAIT_HOSTS=mysql:3308
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30  
 volumes: 
-  app_db:
-
+  data:
 networks: 
-  echoApp:
+  webapp_net:
     driver: bridge

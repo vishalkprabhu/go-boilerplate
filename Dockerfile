@@ -2,15 +2,12 @@ FROM golang:1.15-alpine
 LABEL maintainer="Vishalkprabhu"
 
 
+ENV WAIT_VERSION 2.7.2
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /wait
+
 # Setting up Dev environment
 
-WORKDIR /echo_app/
-# note this file, go.mod exists locally. and contain reference 
-# to direct/indirect dependencies. this step allows to download 
-# dependencies and speedup build for docker images (if it used 
-# to build artifacts, and not as dev env).  
-COPY go.mod  /echo_app/go.mod
-RUN go mod download
-
-
-EXPOSE 1323
+WORKDIR /web_app/
+EXPOSE 1200
+CMD  "/web_app/go-boilerplate"
