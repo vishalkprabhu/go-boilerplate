@@ -1,25 +1,16 @@
 sudo: required
 language: generic
 services:
-  - docker
- 
-# prepare the machine before any code
-# installation scripts
+- docker
 before_install:
-  - './.travis/main.sh' 
-
+- "./.travis/main.sh"
 script:
-  # - docker build -t vishalkprabhu/go-boilerplate .
-  - 'make test'
-  - 'make image'
-
+- make test
+- make image
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "main" ]]; then
-      docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" tweakhub.jfrog.io ;
-      make push-image ;
-    fi
-
-# don't notify me when things fail
+- if [[ "$TRAVIS_BRANCH" == "main" ]]; then docker login -u "$DOCKER_USERNAME" -p
+  "$DOCKER_PASSWORD" tweakhub.jfrog.io ; make push-image ; fi
 notifications:
-  email: false 
-  slack: $SLACK_TEAM:$SLACK
+  email: false
+  slack:
+    secure: J692h3qBr2w4b/187bcpFrijOqqvjloT9v9MoqT4xozVeCNt81umorX4ZSJTrCthsNXWBGHG1wwFWEGOCUMUSZAjSHLvN+yGc2o4KduttY4WMWx9tgdJgHSmqbmGrVxsx6kgzXfEKjuENOzVnmPCMsOTMyIzQNPMpCVV1q28Ns4aYguS1gZ9lXg9NFqAhVnSQAkLf+ZZZ5Er8sTAEkcv4S/wg4QjnaEYsDzx4laSczvzRKMWKNnXS1bsjXnVw+o4/hMtM9EfOBpwj59MdcXFpRR2yYAuGCicPCvglVvc7U8oZbIk7oMqVND7HFnIADteTZiBibA6WqYTxF6Dn1o4nxg6x5HQL16MxyVGcmfdVGUEDHBjb7KMQDK6mUJ3QQ8ablnUQoLejlHg+PBlUTLy4DnKpnXEPJuhPfQbwSU08qRo2+udpi7FfKT5AsCeemSsszXubI1xBv7S3SEKJiSrRP/VmafeZZzn9YNdPK2hBW/eFtN1BhPet5+NTwlJG1WwGqTNvh2BRyhMtHVkHD8Apq/mLXikrQMb1kn2cnT54NnwQfMugiSSAyWndRIiDjAjdz6KQjLEIhU+yDofj4vKbznUjfVuM9V7sRXzHnHm8qSJH8FlKt9Vtf3mh0dGqC4+GbnD2fzuJ1389FF7GkhE4wBfIerJAFwyxb+fTaewcKg=
