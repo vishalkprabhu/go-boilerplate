@@ -22,3 +22,4 @@ after_success:
 # don't notify me when things fail
 notifications:
   email: false 
+  slack: $SLACK_TEAM:$SLACK
