@@ -2,6 +2,23 @@ sudo: required
 language: generic
 services:
   - docker
+ 
+# prepare the machine before any code
+# installation scripts
+before_install:
+  - './.travis/main.sh' 
 
 script:
-  - docker build -t vishalkprabhu/go-boilerplate .
+  # - docker build -t vishalkprabhu/go-boilerplate .
+  - 'make test'
+  - 'make image'
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+      echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin tweakhub.jfrog.io
+      make push-image ;
+    fi
+
+# don't notify me when things fail
+notifications:
+  email: false 
