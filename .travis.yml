@@ -14,9 +14,8 @@ script:
   - 'make image'
 
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-     # echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin tweakhub.jfrog.io
-      docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD tweakhub.jfrog.io ;
+  - if [[ "$TRAVIS_BRANCH" == "main" ]]; then
+      echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin tweakhub.jfrog.io
       make push-image ;
     fi
 
