@@ -1,0 +1,6 @@
+database:
+  name: "mydb"
+  username: "root"
+  password: "password"
+  host: "go-mysql"
+  port: "3306"
