@@ -4,46 +4,44 @@ services:
 
   mysql:
     image: mysql
-    container_name: mysql
+    container_name: go-mysql
     restart: always
     ports: 
       - 3306:3306
     environment: 
-        MYSQL_ROOT_HOST: localhost
-        MYSQL_ROOT_PASSWORD: root
+        MYQSL_ROOT_HOST: localhost
+        MYSQL_ROOT_PASSWORD: password
         MYSQL_DATABASE: mydb
-        MYSQL_USER: user
-        MYSQL_PASSWORD: user
     networks:
-      - echoApp      
-
+      - webapp_net      
     volumes: 
-    - ./init:/docker-entrypoint-initdb.d
-    - app_db:/var/lib/mysql
+    - .mysql-data:/var/lib/mysql:rw
 
-  adminer:
-    image: adminer
-    restart: always
-    ports: 
-      - 8080:8080
-    networks:
-      - echoApp   
   web:
-    container_name: echo_app
-    image: echo_app:latest
-    build: ./
-    command: go run main.go
+    container_name: go-web
+    image: web_app:latest
+    build:
+        context: ./
+        dockerfile: Dockerfile.dev
     volumes:
-      - .:/echo_app
+      - ./bin/go-boilerplate:/go-boilerplate
+      - ./config:/config
+      - ./migrations:/migrations
     ports: 
-      - "1323:1323"      
-    depends_on:
-      - mysql
+      - "1200:1200"      
     networks:
-      - echoApp  
-volumes: 
-  app_db:
+      - webapp_net
+    environment:
+      - WAIT_HOSTS=go-mysql:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30 
+      - ENV_NAME=local 
+    command: sh -c "ls && /wait && /go-boilerplate"  
+    depends_on: 
+      - mysql    
 
 networks: 
-  echoApp:
-    driver: bridge
+  webapp_net:
+    external: 
+      name: go-net

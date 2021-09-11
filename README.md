@@ -24,3 +24,37 @@ Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Migrations
+
+You should install go migrate cli locally
+
+https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
+
+For linux, to install you can try this command
+
+```
+curl -L https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz | tar xvz && \
+    mv migrate.linux-amd64 /bin/migrate
+```
+
+How to create a migration file
+
+```
+migrate create -ext sql -dir migrations -seq create_users_table
+
+```
+
+To Run Migration (up)
+
+```
+make migrate-up-local
+
+```
+
+To execute (down)
+
+```
+make migrate-down-local
+
+```
