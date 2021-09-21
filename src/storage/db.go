@@ -8,8 +8,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-var DB *gorm.DB
-
 type DbConfig struct {
 	User     string
 	Password string
@@ -34,15 +32,11 @@ func NewDB(config DbConfig) *gorm.DB {
 
 	log.Print(dataBase)
 
-	DB, err = gorm.Open(config.GetDBType(), dataBase)
+	DB, err := gorm.Open(config.GetDBType(), dataBase)
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	return DB
-}
-
-func GetDBInstance() *gorm.DB {
 	return DB
 }
