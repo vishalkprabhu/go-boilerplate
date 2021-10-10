@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS subjects (
+  id INT NOT NULL AUTO_INCREMENT, 
+  name VARCHAR(255) NOT NULL, 
+  class VARCHAR(255) NOT NULL, 
+  created_by VARCHAR(255) NOT NULL, 
+  created_at TIMESTAMP NOT NULL, 
+  PRIMARY KEY (id)
+)

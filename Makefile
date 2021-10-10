@@ -32,7 +32,7 @@ create-db-local:
 	docker exec gp-mysql mysql -uroot -ppassword -e "CREATE DATABASE IF NOT EXISTS mydb"
 
 migrate-up-local:
-	migrate -source file://migrations -database "mysql://root:password@tcp(localhost:3306)/mydb" up
+	migrate -source file://migrations -database "mysql://root:password@tcp(localhost:3306)/mydb" -verbose up
 
 migrate-down-local:
 	migrate -source file://migrations -database "mysql://root:password@tcp(localhost:3306)/mydb" down

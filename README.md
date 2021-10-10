@@ -38,6 +38,12 @@ curl -L https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migr
     mv migrate.linux-amd64 /bin/migrate
 ```
 
+For Mac user with BrewKi
+```
+$ brew install golang-migrate
+
+```
+
 How to create a migration file
 
 ```

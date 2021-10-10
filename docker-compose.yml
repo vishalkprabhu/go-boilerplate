@@ -3,7 +3,8 @@ version: '3.6'
 services: 
 
   mysql:
-    image: mysql
+    image: mysql:5.7
+    restart: always
     container_name: go-mysql
     restart: always
     ports: 
@@ -12,10 +13,12 @@ services:
         MYQSL_ROOT_HOST: localhost
         MYSQL_ROOT_PASSWORD: password
         MYSQL_DATABASE: mydb
+        MYSQL_USER: user
+        MYSQL_PASSWORD: password
     networks:
       - webapp_net      
-    volumes: 
-    - .mysql-data:/var/lib/mysql:rw
+    volumes:
+      - db_data:/var/lib/mysql  
 
   web:
     container_name: go-web
@@ -45,3 +48,5 @@ networks:
   webapp_net:
     external: 
       name: go-net
+volumes:
+  db_data: {}
