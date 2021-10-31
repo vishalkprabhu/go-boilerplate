@@ -16,7 +16,12 @@ type ClassService interface {
 	Create() bool
 }
 
-func Initialize(cs ClassService) *App {
+type SubjectService interface {
+	List() []string
+	Create() bool
+}
+
+func Initialize(cs ClassService, sj SubjectService) *App {
 
 	e := echo.New()
 
